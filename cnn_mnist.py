@@ -67,7 +67,7 @@ def _cnn_model_fn(features, labels,mode):
         # 2) Predict the probabilities for each class
 
         "probabilites": tf.nn.softmax(logits , name ="softmax_output"),
-        "classes": tf.arg_max(inputs=logits, axis-1)
+        "classes": tf.argmax(input=logits, axis-1)
     }
     
 
