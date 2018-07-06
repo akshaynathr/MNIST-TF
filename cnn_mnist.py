@@ -56,7 +56,19 @@ def _cnn_model_fn(features, labels,mode):
 
     
     # Logits layer
-    logits = tf.layers.dense(input=dropout,units=10)
+    logits = tf.layers.dense(input=dropout,units=10) #linear activation is used.
+
+
+    #Predictions 
+
+    predictions = {
+        # We need to find out 2 things here . 
+        # 1) Predict the class (0-9)
+        # 2) Predict the probabilities for each class
+
+        "probabilites": tf.nn.softmax(logits , name ="softmax_output"),
+        "classes": tf.arg_max(inputs=logits, axis-1)
+    }
     
 
 if __name__ == '__main__':
