@@ -56,7 +56,7 @@ def _cnn_model_fn(features, labels,mode):
 
     
     # Logits layer
-    logits = tf.layers.dense(input=dropout,units=10) #linear activation is used.
+    logits = tf.layers.dense(inputs=dropout,units=10) #linear activation is used.
 
 
     #Predictions 
@@ -81,7 +81,7 @@ def _cnn_model_fn(features, labels,mode):
     if mode == tf.estimator.ModeKeys.TRAIN:
         # optimizer definition
         optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
-        train_op = optimizer.minimize(loss=loss, global_step=tf.train.global_step())
+        train_op = optimizer.minimize(loss=loss, global_step=tf.train.get_global_step())
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
 
 
@@ -109,7 +109,7 @@ def main(arg):
 
     # Create estimator
 
-    mnist_classifier = tf.estimator.Estimator(model=_cnn_model_fn,model_dir="/tmp/mnist_conv")
+    mnist_classifier = tf.estimator.Estimator(model_fn=_cnn_model_fn,model_dir="/tmp/mnist_conv")
 
 
     # Logging Hook
@@ -149,4 +149,4 @@ def main(arg):
 
 
 if __name__ == '__main__':
-    tf.app.run()
+    tf.app.run(main)
