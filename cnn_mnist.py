@@ -118,6 +118,28 @@ def main(arg):
 
     logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=50)
 
+    train_fn =tf.estimator.inputs.numpy_input_fn(
+                    x={'x':train_data},
+                    y=train_labels,
+                    batch_size=100,
+                    num_epochs=None,
+                    shuffle=True)
+
+    
+    mnist_classifier.train(input_fn=train_fn,
+                        steps=20000,hooks=[logging_hook])
+    
+    eval_input_fn=tf.estimator.inputs.numpy_input_fn(
+            x={"x":eval_data},
+            y= eval_labels,
+            num_epochs=1,
+            shuffle=False)
+
+    eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
+    print (eval_results)
+
+
+
 
 
 
