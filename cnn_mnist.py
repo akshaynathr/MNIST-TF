@@ -94,7 +94,13 @@ def _cnn_model_fn(features, labels,mode):
 
     return tf.estimator.EstimatorSpec(mode=mode,loss=loss,eval_metric_ops=eval_metrics_op)
 
-    
+
+# Main function
+
+def main(arg):
+    #Load the data
+    mnist = tf.contrib.learn.datasets.load_dataset('mnist')
+
 
 
 
