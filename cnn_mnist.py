@@ -100,6 +100,21 @@ def _cnn_model_fn(features, labels,mode):
 def main(arg):
     #Load the data
     mnist = tf.contrib.learn.datasets.load_dataset('mnist')
+    # Training data
+    train_data = mnist.train.images # Returns np.array
+    train_labels =np.asarray(mnist.train.labels,dtype==np.int32)
+    # Testing data 
+    eval_data = mnist.test.images
+    eval_labels = np.asarray(mnist.test.labels,dtype=np.int32)
+
+    # Create estimator
+
+    mnist_classifier = tf.estimator.Estimator(model=_cnn_model_fn,model_dir="/tmp/mnist_conv")
+
+    
+
+
+
 
 
 
