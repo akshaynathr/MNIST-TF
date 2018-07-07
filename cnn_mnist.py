@@ -102,7 +102,7 @@ def main(arg):
     mnist = tf.contrib.learn.datasets.load_dataset('mnist')
     # Training data
     train_data = mnist.train.images # Returns np.array
-    train_labels =np.asarray(mnist.train.labels,dtype==np.int32)
+    train_labels =np.asarray(mnist.train.labels,dtype=np.int32)
     # Testing data 
     eval_data = mnist.test.images
     eval_labels = np.asarray(mnist.test.labels,dtype=np.int32)
