@@ -69,7 +69,34 @@ def _cnn_model_fn(features, labels,mode):
         "probabilites": tf.nn.softmax(logits , name ="softmax_output"),
         "classes": tf.argmax(input=logits, axis-1)
     }
+
+    # MODE
+    if mode==tf.estimator.ModeKeys.PREDICT:
+        return tf.estimator.EstimatorSpec(mode=mode,predictions=predictions)
     
+    # Calculates loss
+    loss = tf.losses.sparse_softmax_cross_entropy(labels=labels,logits=logits)
+
+    #Configure the Training Op for TRAIN mode
+    if mode == tf.estimator.ModeKeys.TRAIN:
+        # optimizer definition
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
+        train_op = optimizer.minimize(loss=loss, global_step=tf.train.global_step())
+        return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
+
+
+    #evaluation metrics
+    eval_metrics_op = {
+        "accuracy": tf.metrics.accuracy(labels=labels, predictions=predictions['classes']),
+
+    }
+
+
+    return tf.estimator.EstimatorSpec(mode=mode,loss=loss,eval_metric_ops=eval_metrics_op)
+
+    
+
+
 
 if __name__ == '__main__':
     tf.app.run()
