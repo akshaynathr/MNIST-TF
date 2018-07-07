@@ -67,7 +67,7 @@ def _cnn_model_fn(features, labels,mode):
         # 2) Predict the probabilities for each class
 
         "probabilites": tf.nn.softmax(logits , name ="softmax_output"),
-        "classes": tf.argmax(input=logits, axis-1)
+        "classes": tf.argmax(input=logits, axis=-1)
     }
 
     # MODE
@@ -111,7 +111,14 @@ def main(arg):
 
     mnist_classifier = tf.estimator.Estimator(model=_cnn_model_fn,model_dir="/tmp/mnist_conv")
 
-    
+
+    # Logging Hook
+
+    tensors_to_log = { "probabilities":"softmax_output"}
+
+    logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=50)
+
+
 
 
 
